@@ -1,144 +1,203 @@
 # C언어 문법 총정리 (정보처리기사 실기 대비)
 
+> 코드를 처음 보는 사람도 이해할 수 있도록 모든 개념을 쉽게 풀어 설명합니다.
+
 ---
 
-## 1. 기본 구조 및 헤더
+## 1. 기본 구조
+
+> C언어 코드는 항상 이 뼈대로 시작합니다.
 
 ```c
-#include <stdio.h>    // printf, scanf, putchar, gets
-#include <stdlib.h>   // malloc, free
-#include <string.h>   // strlen, strcpy 등
-#include <ctype.h>    // isupper, islower, isdigit
+#include <stdio.h>   // printf, scanf 같은 입출력 기능을 가져옴
 
-int main() {
-    // 코드
-    return 0;
+int main() {         // 프로그램이 시작되는 곳
+    // 여기에 코드 작성
+    return 0;        // 정상 종료
 }
 ```
+
+### #include — 필요한 기능 불러오기
+
+| 헤더 | 포함되는 기능 |
+|------|--------------|
+| `#include <stdio.h>` | printf, scanf, putchar (입출력) |
+| `#include <stdlib.h>` | malloc, free (메모리 관리) |
+| `#include <string.h>` | strlen (문자열 길이) |
+| `#include <ctype.h>` | isupper, islower, isdigit (문자 판별) |
 
 ---
 
 ## 2. 기본 입출력
 
-### 2-1. 출력 (printf)
+### 출력 — printf
 
 ```c
-printf("%d\n", 정수);
-printf("%s\n", 문자열);
-printf("%c\n", 문자);
-printf("%d %d %d\n", a, b, c);
+printf("안녕하세요\n");         // 문자열 출력 + 줄바꿈
+printf("%d\n", 10);            // 정수 출력
+printf("%d %d\n", 10, 20);     // 여러 값 출력
+printf("%s\n", "hello");       // 문자열 출력
+printf("%c\n", 'A');           // 문자 1개 출력
 ```
 
-| 서식 지정자 | 의미 |
-|------------|------|
-| `%d` | 10진 정수 |
-| `%o` | 8진 정수 |
-| `%x` | 16진 정수 |
-| `%s` | 문자열 |
-| `%c` | 문자 1개 |
-| `%f` | 실수 |
-| `\n` | 줄바꿈 |
+**서식 지정자 — % 다음에 오는 기호의 의미:**
 
-### 2-2. 입력 (scanf)
+| 기호 | 의미 | 예시 |
+|------|------|------|
+| `%d` | 10진수 정수 | `printf("%d", 42)` → `42` |
+| `%o` | 8진수 | `printf("%o", 8)` → `10` |
+| `%x` | 16진수 | `printf("%x", 16)` → `10` |
+| `%s` | 문자열 | `printf("%s", "hi")` → `hi` |
+| `%c` | 문자 1개 | `printf("%c", 'A')` → `A` |
+| `\n` | 줄바꿈 (엔터) | `"hello\n"` → hello 후 엔터 |
+
+### 입력 — scanf
 
 ```c
-scanf("%d", &a);          // 정수 입력 (&로 주소 전달)
-scanf("%d %d", &i, &j);  // 여러 값 입력
-scanf("%o#%x", &i, &j);  // 8진수#16진수 형식
+int a;
+scanf("%d", &a);          // 정수 입력받기 (&는 주소 전달, 뒤에서 설명)
+scanf("%d %d", &i, &j);  // 두 정수 입력받기 (공백으로 구분)
 ```
 
-### 2-3. 문자 출력
-
-```c
-putchar(문자);           // 문자 1개 출력 (= printf("%c", ...))
-```
+> **& 가 왜 붙을까요?**
+> scanf는 변수에 직접 값을 넣어줘야 하므로, 변수가 있는 **주소**를 알려줘야 합니다.
 
 ---
 
 ## 3. 변수와 자료형
 
 ```c
-int a = 10;
-char c = 'A';
-float f = 3.14;
-double d = 3.14;
-char str[] = "hello";
+int a = 10;           // 정수
+char c = 'A';         // 문자 1개 (작은따옴표)
+float f = 3.14;       // 실수 (4바이트)
+double d = 3.14159;   // 실수 (8바이트, 더 정밀)
+char str[] = "hello"; // 문자열 (문자 배열)
 ```
 
-### 진법 표현 (시험 출제)
+### 진법 표현 — 숫자 앞에 붙는 기호의 의미 (시험 단골!)
 
 ```c
-int j = 024;    // 8진수 (0으로 시작) → 20
-int k = 24;     // 10진수 → 24
-int L = 0x24;   // 16진수 (0x로 시작) → 36
-// hap = 20 + 24 + 36 = 80
+int j = 024;    // 앞에 0만 붙으면 → 8진수  → 2×8 + 4 = 20
+int k = 24;     // 아무것도 없으면 → 10진수 → 24
+int L = 0x24;   // 앞에 0x 붙으면  → 16진수 → 2×16 + 4 = 36
+// 합계: 20 + 24 + 36 = 80
+```
+
+**8진수 계산법:** 각 자리에 8의 거듭제곱을 곱해서 더하기
+```
+024 = 0×8² + 2×8¹ + 4×8⁰ = 0 + 16 + 4 = 20
+```
+
+**16진수 계산법:** 각 자리에 16의 거듭제곱을 곱해서 더하기
+```
+0x24 = 2×16¹ + 4×16⁰ = 32 + 4 = 36
 ```
 
 ---
 
 ## 4. 연산자
 
-### 4-1. 산술 / 복합 대입
+### 4-1. 산술 연산자
 
 ```c
-a + b  /  a - b  /  a * b  /  a / b  /  a % b
-a += 1;  i /= j;  k %= j;
+10 + 3   // 13
+10 - 3   // 7
+10 * 3   // 30
+10 / 3   // 3  (정수끼리 나누면 몫만!)
+10 % 3   // 1  (나머지)
 ```
 
-### 4-2. 증감 연산자
+### 4-2. 복합 대입 연산자
 
 ```c
-++a   // 먼저 증가 후 사용 (전위)
-a++   // 먼저 사용 후 증가 (후위)
+int i = 10, j = 10, k = 30;
+i /= j;   // i = i/j = 10/10 = 1
+j -= i;   // j = j-i = 10-1 = 9
+k %= j;   // k = k%j = 30%9 = 3
+// 출력: 1, 9, 3
 ```
 
-> **출력 예시 (기출 따라잡기_문제4.c)**
-> ```c
-> result = a < b ? b++ : --c;
-> // a(100) < b(200) 참 → b++ : result=200, b=201
-> // 출력: 200, 201, 300
-> ```
-
-### 4-3. 삼항 연산자
+### 4-3. 증감 연산자
 
 ```c
-조건 ? 참일_때 : 거짓일_때
-z = y % 3 < 3 ? 2 : 1;
+int a = 5;
+
+// 전위(++앞에): 먼저 바꾸고 사용
+int b = ++a;   // a를 먼저 6으로 바꾼 뒤 → b=6, a=6
+
+// 후위(뒤에++): 먼저 사용하고 나서 바꿈
+int c = a++;   // 현재 a(6) 먼저 c에 → c=6, 그 다음 a=7
 ```
 
-### 4-4. 비트 연산자
-
+**시험 핵심 예시:**
 ```c
-a & b    // AND
-a | b    // OR
-a ^ b    // XOR
-a >> n   // 오른쪽 시프트 (÷2^n)
-a << n   // 왼쪽 시프트 (×2^n)
-~a       // NOT
+int a = 100, b = 200, c = 300;
+int result = a < b ? b++ : --c;
+// ① a(100) < b(200) → 참
+// ② b++ → result = 200 (현재 b 값 먼저 사용)
+// ③ 그 다음 b = 201
+// 결과: result=200, b=201, c=300
 ```
 
-### 4-5. 논리 연산자
+### 4-4. 삼항 연산자 — if-else를 한 줄로
 
 ```c
-a && b   // AND (단락 평가)
-a || b   // OR  (단락 평가)
-!a       // NOT
+// 형식: 조건 ? 참일_때 : 거짓일_때
+int x = 5;
+int result = (x > 3) ? 10 : 20;
+// x가 3보다 크므로 → result = 10
+```
+
+### 4-5. 비트 연산자 — 2진수로 계산
+
+```c
+a & b    // AND: 둘 다 1일 때만 1
+a | b    // OR:  하나라도 1이면 1
+a ^ b    // XOR: 다를 때 1
+~a       // NOT: 0→1, 1→0 (전부 뒤집기)
+a >> n   // 오른쪽으로 n칸 이동 = ÷2ⁿ
+a << n   // 왼쪽으로 n칸 이동  = ×2ⁿ
+```
+
+**시프트 예시:**
+```c
+100 >> 1   // 100 ÷ 2 = 50
+100 >> 2   // 100 ÷ 4 = 25
+1 << 3     // 1  × 8  = 8
 ```
 
 ### 4-6. 연산자 우선순위
 
+> 높은 것이 먼저 계산됩니다 (수학의 곱셈이 덧셈보다 먼저인 것처럼)
+
 ```
-단항(++, --, !) > *(곱셈) > +- > 시프트 > 비교 >
-비트AND(&) > 비트XOR(^) > 비트OR(|) > 논리AND(&&) > 논리OR(||) > 삼항 > 대입
+높음 → 단항(++, --, !) > 곱셈(*, /, %) > 덧셈(+, -)
+      > 시프트(>>, <<) > 비교(<, >, <=, >=) > 동등(==, !=)
+      > 비트AND(&) > 비트XOR(^) > 비트OR(|)
+      > 논리AND(&&) > 논리OR(||) > 삼항(?:) > 대입(=, +=...)
+낮음
 ```
 
-> **출력 예시 (316 기출체크1.c)**
-> ```c
-> z = y % 3 < 3 ? 2 : 1;   // 4%3=1, 1<3 참 → z=2
-> z = z & z >> 1;            // z>>1=1, z&1=0 → z=0
-> z = x > 5 && z <= 3 ? z*x : z/x;  // 7>5 && 0<=3 → z*x=0
-> // 출력: 0
-> ```
+**실전 풀이 예시:**
+```c
+int x=7, y=4;
+int z;
+z = y % 3 < 3 ? 2 : 1;
+// ① y%3 = 4%3 = 1
+// ② 1 < 3 → 참
+// ③ 참이므로 z = 2
+
+z = z & z >> 1;
+// ① z >> 1 = 2 >> 1 = 1 (오른쪽 시프트 먼저)
+// ② z & 1 = 2 & 1 = 010 & 001 = 000 = 0
+// z = 0
+
+z = x > 5 && z <= 3 ? z * x : z / x;
+// ① x>5 → 7>5 → 참
+// ② z<=3 → 0<=3 → 참
+// ③ 참&&참 → 참 → z*x = 0*7 = 0
+// z = 0  → 출력: 0
+```
 
 ---
 
@@ -147,171 +206,248 @@ a || b   // OR  (단락 평가)
 ### 5-1. if / else
 
 ```c
-if (조건) {
-    // 실행
-} else if (조건) {
-    // 실행
+if (score >= 90) {
+    printf("A");
+} else if (score >= 80) {
+    printf("B");
 } else {
-    // 실행
+    printf("F");
 }
 ```
 
-### 5-2. switch / case (fall-through 주의)
+### 5-2. switch / case — fall-through 주의!
+
+> `break`가 없으면 아래 case로 계속 내려갑니다 (fall-through)
 
 ```c
-switch (변수) {
-case 3: c = 0;    // break 없으면 아래로 계속
-case 4: c += 3;
-case 5: c -= 10;
-default: c--;
+int c = 1;
+switch (3) {
+    case 1: c += 3;    // 실행 안 됨 (3이 아니니까)
+    case 2: c++;       // 실행 안 됨
+    case 3: c = 0;     // c = 0 (break 없음 → 아래로 계속!)
+    case 4: c += 3;    // c = 3 (break 없음 → 아래로 계속!)
+    case 5: c -= 10;   // c = -7 (break 없음 → 아래로 계속!)
+    default: c--;      // c = -8
+}
+printf("%d", c);   // -8
+```
+
+**switch에서 break의 역할:**
+```c
+switch (grade) {
+    case 10:
+    case 9:
+        printf("A\n");
+        break;   // ← break 있음 → A 출력 후 switch 탈출
+    case 8:
+        printf("B\n");
+        break;
+    default:
+        printf("F\n");
 }
 ```
 
-> **출력 예시 (317 기출체크1.c)**
-> ```c
-> int c = 1;
-> switch(3) {
->     case 3: c = 0;    // c=0
->     case 4: c += 3;   // c=3
->     case 5: c -= 10;  // c=-7
->     default: c--;     // c=-8
-> }
-> // 출력: -8
-> ```
-
-### 5-3. for
+### 5-3. for 루프
 
 ```c
-for (int i = 0; i < 5; i++) { ... }
-for (int i = 0, j = len-1; i < j; i++, j--) { ... }  // 다중 초기화
+for (int i = 0; i < 5; i++) {
+    printf("%d ", i);   // 0 1 2 3 4
+}
+
+// 초기화 여러 개
+for (int i=0, j=10; i < j; i++, j--) {
+    // i 증가, j 감소 동시에
+}
 ```
 
 ### 5-4. while / do-while
 
 ```c
-while (조건) { ... }
+// while: 조건 확인 후 실행 (처음부터 조건이 거짓이면 한 번도 실행 안 됨)
+while (조건) {
+    // 실행
+}
 
+// do-while: 먼저 실행 후 조건 확인 (최소 1번은 반드시 실행됨)
 do {
-    // 최소 1회 실행
+    // 실행
 } while (조건);
 ```
 
 ### 5-5. break / continue
 
 ```c
-break;      // 루프/switch 즉시 탈출
-continue;   // 현재 반복 건너뜀
+// break: 루프/switch 즉시 탈출
+while (1) {
+    if (input == 0) break;   // input이 0이면 탈출
+}
+
+// continue: 이번 반복만 건너뛰고 다음으로
+for (int i=0; i<10; i++) {
+    if (i % 2 == 0) continue;  // 짝수면 건너뜀
+    printf("%d ", i);           // 홀수만 출력: 1 3 5 7 9
+}
 ```
 
 ---
 
 ## 6. 배열
 
+> 배열은 **같은 자료형의 값을 여러 개 줄지어 담는 것**입니다.
+> 인덱스(번호)는 **0번**부터 시작합니다.
+
 ### 6-1. 1차원 배열
 
 ```c
-int a[5] = {1, 2, 3, 4, 5};
-int a[] = {85, 75, 50, 100, 95};   // 크기 자동
-a[i]          // i번째 원소
-sizeof(a)/sizeof(a[0])   // 배열 원소 개수
+int a[5] = {1, 2, 3, 4, 5};   // 크기 5, 값 초기화
+int b[] = {10, 20, 30};        // 크기 자동 (3)
+
+a[0]   // 1  (첫 번째)
+a[4]   // 5  (마지막)
+
+// 원소 개수 구하기
+int n = sizeof(a) / sizeof(a[0]);   // 전체 크기 / 원소 1개 크기
 ```
 
-### 6-2. 2차원 배열
+### 6-2. 2차원 배열 — 표처럼 생긴 배열
 
 ```c
-int arr[3][3] = {1,2,3,4,5,6,7,8,9};   // 순서대로 채워짐
-arr[i][j]    // i행 j열
+int arr[3][3] = {
+    {1, 2, 3},   // 0행
+    {4, 5, 6},   // 1행
+    {7, 8, 9}    // 2행
+};
+
+arr[1][2]   // 6  (1행, 2열)
 ```
 
-### 6-3. 포인터와 배열
-
+**초기화 주의:** 중괄호 없이 나열하면 행 순서대로 채워집니다.
 ```c
-int* p = arr;
-*(p + i) == p[i] == arr[i]   // 모두 같음
+int arr[3][3] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+// arr[0] = {1,2,3}, arr[1] = {4,5,6}, arr[2] = {7,8,9}
 ```
 
 ---
 
 ## 7. 포인터 (Pointer)
 
+> **포인터는 주소를 저장하는 변수입니다.**
+> 마치 "집 주소를 적어두는 수첩"이라고 생각하세요.
+
 ### 7-1. 기본 개념
 
 ```c
-int a = 50;
-int *b = &a;   // b는 a의 주소를 저장
+int a = 50;       // a라는 상자에 50 저장
+int *b = &a;      // b는 a의 주소를 저장 (& = 주소 가져오기)
 
-*b             // b가 가리키는 값 (= a)
-*b = *b + 20;  // a = 70
+// 이제 b는 a를 가리킴
+*b          // 50  (b가 가리키는 곳의 값 = a의 값)
+*b = *b + 20;  // a의 값을 50+20=70으로 바꿈
+printf("%d, %d\n", a, *b);  // 70, 70
 ```
 
-### 7-2. 포인터와 문자열
+**핵심 기호 2개:**
+```
+&a  → a의 주소를 가져옴 (address of)
+*b  → b가 가리키는 곳의 값을 읽거나 씀 (dereference)
+```
+
+### 7-2. 포인터와 배열 — 사실 같은 것!
+
+```c
+int arr[5] = {1, 2, 3, 4, 5};
+int *p = arr;   // arr = 배열의 첫 번째 주소
+
+// 아래 세 가지는 모두 같은 값을 가져옴
+arr[2]     // 3
+*(arr + 2) // 3  (arr에서 2칸 이동한 곳의 값)
+*(p + 2)   // 3  (p에서 2칸 이동한 곳의 값)
+p[2]       // 3
+```
+
+### 7-3. 포인터와 문자열
 
 ```c
 char *p = "KOREA";
-printf("%s\n", p);      // "KOREA"      (p부터 끝까지)
-printf("%s\n", p + 3);  // "EA"         (p+3부터 끝까지)
-printf("%c\n", *p);     // 'K'          (p가 가리키는 문자)
-printf("%c\n", *(p+3)); // 'E'          (p+3이 가리키는 문자)
-printf("%c\n", *p + 2); // 'M'          (K의 ASCII + 2)
+//  K  O  R  E  A  \0
+//  0  1  2  3  4  5
+
+printf("%s\n", p);      // KOREA   (p[0]부터 \0까지 전부)
+printf("%s\n", p + 3);  // EA      (p[3]부터 \0까지)
+printf("%c\n", *p);     // K       (p[0]의 값)
+printf("%c\n", *(p+3)); // E       (p[3]의 값)
+printf("%c\n", *p + 2); // M       (K의 ASCII코드 75 + 2 = 77 = 'M')
 ```
 
-### 7-3. 이중 포인터
+**`*p`와 `p+n`의 차이:**
+- `*p` → p가 가리키는 **문자 1개**
+- `p+3` → p에서 3칸 뒤 **주소** (그 위치부터 문자열)
+
+### 7-4. 포인터 배열 / 이중 포인터
 
 ```c
 int a = 12, b = 24, c = 36;
-int* array[3] = {&a, &b, &c};
+int* array[3] = {&a, &b, &c};   // 주소들을 담은 배열
+
+*array[1]   // *(&b) = b = 24
+**array     // *(*(array)) = *(array[0]) = *(&a) = a = 12
+
 printf("%d", *array[1] + **array + 1);
-// *array[1] = b = 24
-// **array = *array[0] = a = 12
-// 출력: 37
-```
-
-### 7-4. 포인터 연산
-
-```c
-int ary[3];
-*(ary + 0) = 1;         // ary[0] = 1
-ary[1] = *(ary+0) + 2;  // ary[1] = 3
-ary[2] = *ary + 3;      // *ary = ary[0] = 1 → ary[2] = 4
-// 합계: 1+3+4 = 8
+// 24 + 12 + 1 = 37
 ```
 
 ---
 
 ## 8. 구조체 (Structure)
 
-### 8-1. 구조체 정의 및 사용
+> 구조체는 **여러 자료형을 묶어서 하나의 이름으로 관리하는 것**입니다.
+> 예: 학생(이름 + 나이 + 성적)을 하나로 묶기
+
+### 8-1. 구조체 정의와 사용
 
 ```c
 struct insa {
-    char name[10];
-    int age;
+    char name[10];   // 이름 (문자 배열)
+    int age;         // 나이
 };
 
-struct insa a[] = {"Kim", 28, "Lee", 38, "Park", 42};
-struct insa* p = a;
-p++;              // 다음 구조체로 이동
-p->name           // 포인터로 멤버 접근 (= (*p).name)
-p->age
+// 배열로 여러 개 선언
+struct insa a[] = {
+    "Kim", 28,
+    "Lee", 38,
+    "Park", 42
+};
+
+// 포인터로 접근
+struct insa* p = a;   // p는 a[0] (Kim)을 가리킴
+p++;                  // p는 a[1] (Lee)을 가리킴
+
+// 구조체 멤버 접근
+p->name   // "Lee"   (포인터로 접근할 때 -> 사용)
+p->age    // 38
+(*p).age  // 38      (->와 같은 의미)
 ```
 
 ### 8-2. 구조체 포인터 연산
 
 ```c
-struct jsu* p = &st[0];
-(p + 1)->hab = (p + 1)->os + (p + 2)->db;
-// p+1은 st[1], p+2는 st[2]
+struct jsu* p = &st[0];     // p는 st[0]을 가리킴
+(p + 1)->os                 // st[1].os   (p에서 1칸 이동)
+(p + 2)->db                 // st[2].db   (p에서 2칸 이동)
 ```
 
-### 8-3. typedef
+### 8-3. typedef — 구조체 이름 줄이기
 
 ```c
+// 기존: struct Data 라고 매번 써야 함
+// typedef로 Data 라고만 써도 됨
+
 typedef struct Data {
     int value;
-    struct Data *next;
+    struct Data *next;   // 자기 자신을 가리키는 포인터 (연결 리스트에서 사용)
 } Data;
 
-Data* new_node = (Data*)malloc(sizeof(Data));
+Data* node = (Data*)malloc(sizeof(Data));   // 더 짧게 사용 가능
 ```
 
 ---
@@ -321,240 +457,345 @@ Data* new_node = (Data*)malloc(sizeof(Data));
 ### 9-1. 기본 구조
 
 ```c
+// 반환형 함수이름(매개변수) { ... }
 int add(int a, int b) {
     return a + b;
 }
+
+int result = add(3, 5);   // result = 8
 ```
 
-### 9-2. 포인터 매개변수 (값 변경 목적)
+### 9-2. 값 전달 vs 포인터 전달
+
+> **핵심 차이!** 일반 변수는 복사본이 전달돼서 원본이 안 바뀌고,
+> 포인터로 전달하면 원본을 직접 수정할 수 있습니다.
 
 ```c
-void swap(int* a, int idx1, int idx2) {
-    int t = a[idx1];
-    a[idx1] = a[idx2];
-    a[idx2] = t;
+// 값 전달 → 원본 안 바뀜
+void swap_wrong(int a, int b) {
+    int t = a; a = b; b = t;   // 복사본끼리 바꿈, 원본 불변
 }
-swap(a, j, j+1);   // 배열을 포인터로 전달
+
+// 포인터 전달 → 원본 바뀜
+void swap_ok(int* a, int* b) {
+    int t = *a; *a = *b; *b = t;   // 원본을 직접 수정
+}
+
+int x = 10, y = 20;
+swap_wrong(x, y);    // x=10, y=20 그대로
+swap_ok(&x, &y);     // x=20, y=10 으로 바뀜!
 ```
 
-> **핵심:** 함수에서 원본 값을 바꾸려면 포인터(주소)로 전달해야 함
-
-### 9-3. 재귀 함수
+### 9-3. 재귀 함수 — 스스로를 다시 부르는 함수
 
 ```c
+// 팩토리얼: n! = n × (n-1) × ... × 1
 int func(int a) {
-    if (a <= 1) return 1;       // 종료 조건
-    return a * func(a - 1);     // 재귀 호출 (팩토리얼)
+    if (a <= 1) return 1;        // 멈추는 조건 (없으면 무한 반복!)
+    return a * func(a - 1);      // 자기 자신 호출
 }
+
+// func(4) 계산 과정:
+// func(4) = 4 × func(3)
+//         = 4 × 3 × func(2)
+//         = 4 × 3 × 2 × func(1)
+//         = 4 × 3 × 2 × 1 = 24
 ```
 
-### 9-4. static 변수 (함수 내)
+### 9-4. static 변수 — 함수가 끝나도 값이 유지됨
 
 ```c
 int func() {
-    static int x = 0;   // 함수 호출 간 값 유지
+    static int x = 0;   // static: 함수가 끝나도 사라지지 않음
     x += 2;
     return x;
 }
-// 첫 호출: x=2, 두번째: x=4, 세번째: x=6, 네번째: x=8
+
+// 4번 호출하면:
+// 1번째: x=0+2=2,  반환 2
+// 2번째: x=2+2=4,  반환 4  (이전 값 2가 유지!)
+// 3번째: x=4+2=6,  반환 6
+// 4번째: x=6+2=8,  반환 8
 // 합계: 2+4+6+8 = 20
 ```
 
-### 9-5. 함수 포인터
+### 9-5. 함수 포인터 — 함수를 변수에 저장
 
 ```c
-int (*pf)(int);   // int를 받고 int를 반환하는 함수 포인터
-pf = factorial;
-pf(3);            // factorial(3) 호출
+int factorial(int n) {
+    if (n <= 1) return 1;
+    return n * factorial(n-1);
+}
+
+int (*pf)(int);     // int를 받고 int를 반환하는 함수를 담는 포인터
+pf = factorial;     // factorial 함수를 pf에 저장
+printf("%d", pf(3)); // factorial(3) 호출 = 6
 ```
 
 ---
 
 ## 10. 동적 메모리 할당
 
+> 프로그램 실행 중에 **필요한 만큼만** 메모리를 빌리는 것입니다.
+> 빌린 메모리는 반드시 `free()`로 돌려줘야 합니다.
+
 ```c
 #include <stdlib.h>
 
-int* arr = (int*)malloc(sizeof(int) * 5);   // 할당
-free(arr);                                    // 해제
+// 정수 5개 공간 빌리기
+int* arr = (int*)malloc(sizeof(int) * 5);
+// sizeof(int) = 4바이트, 5개 = 20바이트 할당
 
-// 2D 배열
-int** arr = (int**)malloc(sizeof(int*) * rows);
-for (int i = 0; i < rows; i++)
-    arr[i] = (int*)malloc(sizeof(int) * cols);
-// 해제 시 역순
-for (int i = 0; i < rows; i++) free(arr[i]);
-free(arr);
+arr[0] = 10;   // 일반 배열처럼 사용
+arr[1] = 20;
+
+free(arr);     // 다 쓴 후 반납! (안 하면 메모리 낭비)
+```
+
+**2차원 동적 배열:**
+```c
+int rows = 3, cols = 3;
+int** arr = (int**)malloc(sizeof(int*) * rows);  // 행 배열 할당
+for (int i = 0; i < rows; i++) {
+    arr[i] = (int*)malloc(sizeof(int) * cols);   // 각 행의 열 할당
+}
+
+// 사용 후 해제 (역순으로!)
+for (int i = 0; i < rows; i++) free(arr[i]);    // 각 행 해제
+free(arr);                                        // 행 배열 해제
 ```
 
 ---
 
-## 11. 연결 리스트
+## 11. 연결 리스트 (Linked List)
+
+> 연결 리스트는 **각 데이터가 다음 데이터의 주소를 갖고 있어서 연결된 구조**입니다.
+> 기차처럼 각 칸이 다음 칸의 위치를 알고 있는 것이라 생각하세요.
+
+```
+[데이터1 | →] → [데이터2 | →] → [데이터3 | NULL]
+  head                                    (끝)
+```
 
 ```c
 typedef struct Data {
-    int value;
-    struct Data *next;   // 다음 노드 포인터
+    int value;          // 데이터
+    struct Data *next;  // 다음 노드의 주소 (화살표 역할)
 } Data;
 
-// 삽입 (앞에 추가)
+// 앞에 삽입하기
 Data* insert(Data* head, int value) {
     Data* new_node = (Data*)malloc(sizeof(Data));
     new_node->value = value;
-    new_node->next = head;
-    return new_node;
+    new_node->next = head;    // 새 노드의 next = 기존 head
+    return new_node;          // 새 노드가 새로운 head
 }
 
-// 순회
-for (curr = head; curr != NULL; curr = curr->next)
+// 1, 2, 3, 4, 5 순서로 삽입하면
+// 5→4→3→2→1 순서로 연결됨 (앞에 추가되니까)
+
+// 순회 (처음부터 끝까지 출력)
+Data* curr = head;
+while (curr != NULL) {
     printf("%d", curr->value);
+    curr = curr->next;   // 다음 노드로 이동
+}
 ```
 
 ---
 
-## 12. 스택 / 큐
+## 12. 스택과 큐
 
-### 스택 (LIFO)
+### 스택 (Stack) — LIFO: 나중에 넣은 것이 먼저 나옴
+
+> 접시 쌓기를 생각하세요. 맨 위에 올리고, 맨 위에서 꺼냅니다.
+
 ```c
-int isWhat[MAX_SIZE];
-int point = -1;
+int isWhat[10];
+int point = -1;   // 맨 위 위치 (-1 = 비어있음)
 
-void into(int num) { isWhat[++point] = num; }   // push
-int take() { return isWhat[point--]; }           // pop (뒤에서)
+// push: 맨 위에 넣기
+void into(int num) {
+    isWhat[++point] = num;   // point 먼저 증가, 그 자리에 저장
+}
+
+// pop: 맨 위에서 꺼내기
+int take() {
+    return isWhat[point--];  // 꺼내고 point 감소
+}
 ```
 
-### 큐 (FIFO)
+### 큐 (Queue) — FIFO: 먼저 넣은 것이 먼저 나옴
+
+> 줄 서기를 생각하세요. 먼저 온 사람이 먼저 나갑니다.
+
 ```c
 typedef struct {
-    int a[SIZE];
-    int front, rear;
+    int a[3];
+    int front, rear;   // front: 꺼내는 쪽, rear: 넣는 쪽
 } Queue;
 
+// enqueue: 뒤에 넣기
 void enq(Queue* q, int val) {
     q->a[q->rear] = val;
-    q->rear = (q->rear + 1) % SIZE;  // 원형 큐
+    q->rear = (q->rear + 1) % 3;  // 3이 되면 다시 0 (원형)
 }
+
+// dequeue: 앞에서 꺼내기
 int deq(Queue* q) {
     int val = q->a[q->front];
-    q->front = (q->front + 1) % SIZE;
+    q->front = (q->front + 1) % 3;
     return val;
 }
 ```
 
 ---
 
-## 13. 문자열 / ctype.h
+## 13. 문자열 처리 / ctype.h
+
+### 문자열 길이
 
 ```c
-int len = strlen(str);    // 문자열 길이
+#include <string.h>
+char str[] = "ABCDEFGH";
+int len = strlen(str);   // 8 (널문자 \0 제외)
+```
 
-// ctype.h 함수
-isupper(c)    // 대문자인지
-islower(c)    // 소문자인지
-isdigit(c)    // 숫자인지
+### ctype.h — 문자 종류 판별
 
-// 대소문자 변환 패턴
-result[i] = (p[i] - 'A' + 5) % 25 + 'A';   // 대문자 시프트
-result[i] = (p[i] - 'a' + 10) % 26 + 'a';  // 소문자 시프트
-result[i] = (p[i] - '0' + 3) % 10 + '0';   // 숫자 시프트
+```c
+#include <ctype.h>
+
+isupper('A')   // 1 (참) - 대문자인지
+isupper('a')   // 0 (거짓)
+islower('a')   // 1 (참) - 소문자인지
+isdigit('5')   // 1 (참) - 숫자인지
+```
+
+### 문자 코드 변환 패턴 — 시험 자주 출제
+
+> ASCII 코드를 이용해서 문자를 다른 문자로 바꾸는 패턴입니다.
+
+```c
+// 'A' = 65, 'B' = 66, ..., 'Z' = 90
+// 'a' = 97, 'b' = 98, ..., 'z' = 122
+// '0' = 48, '1' = 49, ..., '9' = 57
+
+// 대문자를 5칸 앞으로 이동 (Z 넘어가면 다시 A로)
+result[i] = (p[i] - 'A' + 5) % 25 + 'A';
+// 예: 'I' → (73-65+5) % 25 + 65 = 13 % 25 + 65 = 78 = 'N'
+
+// 소문자를 10칸 앞으로 이동
+result[i] = (p[i] - 'a' + 10) % 26 + 'a';
+// 예: 't' → (116-97+10) % 26 + 97 = 29%26+97 = 3+97 = 100 = 'd'... 잠깐, 's'
+// 실제: 's' → (115-97+10)%26+97 = 28%26+97 = 2+97 = 99 = 'c'
+
+// 숫자를 3칸 앞으로 이동 (9 넘어가면 다시 0으로)
+result[i] = (p[i] - '0' + 3) % 10 + '0';
+// 예: '8' → (56-48+3) % 10 + 48 = 11%10+48 = 1+48 = 49 = '1'
 ```
 
 ---
 
-## 14. 전처리기
+## 14. 전처리기 (#define)
 
 ```c
-#include <stdio.h>        // 헤더 파일 포함
-#define MAX_SIZE 10       // 상수 정의 (세미콜론 없음)
+#define MAX_SIZE 10   // MAX_SIZE 라고 쓰면 코드에서 10으로 치환됨
 #define SIZE 3
+
+// 사용 예
+int arr[MAX_SIZE];   // int arr[10]; 과 동일
 ```
+
+> **주의:** `#define` 뒤에는 세미콜론(`;`)을 붙이지 않습니다!
 
 ---
 
-## 15. 자주 나오는 패턴
+## 15. 자주 나오는 패턴 정리
 
-### 패턴 1 — 버블 정렬
+### 패턴 1 — 버블 정렬 (인접한 두 값을 비교해서 자리 교환)
+
 ```c
-for (int i = 0; i < len - 1; i++)
-    for (int j = 0; j < len - 1 - i; j++)
-        if (a[j] > a[j+1]) {
-            temp = a[j]; a[j] = a[j+1]; a[j+1] = temp;
+// [85, 75, 50, 100, 95] → 오름차순 정렬
+for (int i = 0; i < len - 1; i++) {
+    for (int j = 0; j < len - 1 - i; j++) {
+        if (a[j] > a[j+1]) {           // 앞이 뒤보다 크면
+            int temp = a[j];
+            a[j] = a[j+1];             // 자리 교환
+            a[j+1] = temp;
         }
+    }
+}
+// 결과: [50, 75, 85, 95, 100]
 ```
 
-### 패턴 2 — 선택 정렬 (do-while)
+### 패턴 2 — 숫자 뒤집기
+
 ```c
-do {
-    int j = i + 1;
-    do {
-        if (E[i] > E[j]) { swap; }
-        j++;
-    } while (j < n);
-    i++;
-} while (i < n - 1);
+int number = 1234;
+int result = 0;
+while (number != 0) {
+    result = result * 10 + number % 10;   // 마지막 자리를 앞에 추가
+    number = number / 10;                  // 마지막 자리 제거
+}
+// 1234 → 4321
+// 단계: 0→4, 40→43, 430→432, 4320→4321
 ```
 
-### 패턴 3 — 숫자 자릿수 분리
+### 패턴 3 — 잔돈 계산
+
 ```c
 int m = 4620;
-int a = m / 1000;          // 1000원 단위
-int b = m % 1000 / 500;    // 500원 단위
-int c = m % 500 / 100;     // 100원 단위
-int d = m % 100 / 10;      // 10원 단위
+int a = m / 1000;          // 1000원짜리: 4개
+int b = m % 1000 / 500;    // 500원짜리: 1개 (620중 500이 1개)
+int c = m % 500 / 100;     // 100원짜리: 1개 (120중 100이 1개)
+int d = m % 100 / 10;      // 10원짜리: 2개 (20중 10이 2개)
 ```
 
-### 패턴 4 — 숫자 뒤집기
-```c
-while (number != 0) {
-    result = result * 10 + number % 10;
-    number = number / 10;
-}
-```
+### 패턴 4 — 소수 판별
 
-### 패턴 5 — 소수 판별
 ```c
+// 소수: 1과 자기 자신만으로 나누어지는 수 (2, 3, 5, 7, 11...)
 int isPrime(int number) {
-    for (int i = 2; i < number; i++)
-        if (number % i == 0) return 0;
-    return 1;
+    for (int i = 2; i < number; i++) {
+        if (number % i == 0)  // 나누어지면 소수 아님
+            return 0;
+    }
+    return 1;   // 끝까지 안 나누어지면 소수
 }
 ```
 
-### 패턴 6 — 완전수 판별
-```c
-int isPerfectNum(int num) {
-    int sum = 0;
-    for (int i = 1; i < num; i++)
-        if (num % i == 0) sum += i;
-    return (num == sum) ? 1 : 0;
-}
-```
+### 패턴 5 — 문자열 역순
 
-### 패턴 7 — 문자열 역순
 ```c
-for (int i = 0, j = len-1; i < j; i++, j--) {
+char str[] = "ABCDEFGH";   // len = 8
+int len = strlen(str);
+
+// 양쪽 끝에서 시작해서 가운데로 모이며 교환
+for (int i=0, j=len-1; i < j; i++, j--) {
     char ch = str[i];
     str[i] = str[j];
     str[j] = ch;
 }
+// ABCDEFGH → HGFEDCBA
 ```
 
 ---
 
-## 16. 시험 출제 포인트
+## 16. 시험 출제 포인트 요약
 
-| 개념 | 핵심 포인트 |
-|------|------------|
-| 진법 표현 | `0`으로 시작 → 8진수, `0x` → 16진수 |
-| 포인터 | `*p` 역참조, `&a` 주소, `p->m` 구조체 멤버 |
-| 배열·포인터 | `a[i] == *(a+i)` 동일 |
-| switch fall-through | `break` 없으면 아래 case 모두 실행 |
-| 전위·후위 증감 | `++a` 증가 후 사용, `a++` 사용 후 증가 |
-| static 변수 | 함수 내 선언 시 호출 간 값 유지 |
-| 구조체 포인터 | `->` 연산자로 멤버 접근 |
-| 동적 할당 | `malloc`으로 할당, `free`로 해제 |
-| 재귀 함수 | 반드시 종료 조건 확인 |
-| 연결 리스트 | head → node → NULL 구조 |
+| 개념 | 핵심 포인트 | 예시 |
+|------|------------|------|
+| 진법 | `0` 시작 → 8진수, `0x` → 16진수 | `024` = 20 |
+| 포인터 | `*p` 값, `&a` 주소, `p->m` 구조체 멤버 | `*p = *(p+0) = p[0]` |
+| switch fall-through | break 없으면 아래 case 계속 실행 | case 3부터 default까지 |
+| 전위/후위 증감 | `++a` 먼저 증가, `a++` 나중에 증가 | `result=k++` → result=k, k+1 |
+| static 변수 | 함수 내에서도 값이 유지 | 호출 때마다 누적 |
+| 구조체 포인터 | `->` 로 멤버 접근 | `p->name` |
+| 값 전달 | 기본형은 복사 전달 → 원본 불변 | `swap(a,b)` 원본 안 바뀜 |
+| 포인터 전달 | 포인터로 전달 → 원본 변경 가능 | `swap(&a, &b)` |
+| 동적 할당 | malloc → 사용 → free | 쌍으로 기억 |
+| 재귀 | 반드시 종료 조건 확인 | `if (n<=1) return 1;` |
 
 ---
 
