@@ -17,8 +17,8 @@
 9. [클래스](#9-클래스)
 10. [기출 따라잡기](#10-기출-따라잡기)
 11. [고급 문제 (트리 / 문자열 탐색)](#11-고급-문제-트리--문자열-탐색)
-12. [자주 나오는 함정 정리](#12-자주-나오는-함정-정리)
-13. [정답 모음](#13-정답-모음)
+12. [정답 모음](#12-정답-모음)
+13. [풀이 & 포인트 모음](#13-풀이--포인트-모음)
 
 ---
 
@@ -30,8 +30,6 @@ x, y = 100, 200
 print(x==y)
 ```
 
-**포인트:** `==`는 값을 비교. 100과 200은 다르므로 False.
-
 ---
 
 ### 문제 24 — 입력값 분리
@@ -40,8 +38,6 @@ x, y = input("x, y의 값을 공백으로 구분하여 입력 : ").split(' ')
 print("x의 값 :", x)
 print("y의 값 :", y)
 ```
-
-**포인트:** `split(' ')`으로 공백 기준 분리 후 각각 변수에 대입.
 
 ---
 
@@ -52,14 +48,6 @@ print("y의 값 :", y)
 a, b = 2, 3
 c = a & b
 print(c)
-```
-
-**풀이:**
-```
-a = 2 → 이진수 010
-b = 3 → 이진수 011
-a & b → 010 (둘 다 1인 자리만 1)
-010 = 2
 ```
 
 ---
@@ -74,15 +62,6 @@ for i in range(1, 3):
 print(result)
 ```
 
-**풀이:**
-```
-i=1: result = 100 >> 1 = 50,  result = 50+1 = 51
-i=2: result = 100 >> 2 = 25,  result = 25+1 = 26
-최종: 26
-```
-
-**포인트:** `>>` 오른쪽 시프트 = 2로 나눔. 매 반복마다 result가 덮어쓰여짐.
-
 ---
 
 ## 3. 반복문 (for / while)
@@ -95,22 +74,18 @@ for i in range(1, 11):
 print(i, hap)
 ```
 
-**포인트:** 루프가 끝난 뒤 `i`는 마지막 값인 10. `hap`은 1~10 합계 = 55.
-
 ---
 
 ### 문제 26 / 문제 27 — while + break (1~100 합계)
 ```python
 i, hap = 0, 0
-while 1:      # while True: 와 동일
+while 1:
     i += 1
     hap += i
     if i >= 100:
         break
 print(hap)
 ```
-
-**포인트:** `while 1`은 `while True`와 완전히 동일. `i >= 100`이 되면 break로 탈출.
 
 ---
 
@@ -125,20 +100,6 @@ while a < 10:
 print(sum)
 ```
 
-**풀이:**
-```
-a=1: 홀수 → continue (건너뜀)
-a=2: 짝수 → sum=2
-a=3: 홀수 → continue
-a=4: 짝수 → sum=6
-a=5: 홀수 → continue
-a=6: 짝수 → sum=12
-a=7: 홀수 → continue
-a=8: 짝수 → sum=20
-a=9: 홀수 → continue
-a=10: 짝수 → sum=30
-```
-
 ---
 
 ## 4. 문자열 & 슬라이싱
@@ -146,21 +107,12 @@ a=10: 짝수 → sum=30
 ### 문제 25 — 문자열 슬라이싱 조합
 ```python
 a = "engineer information programming"
-b = a[:3]       # "eng"
-c = a[4:6]      # "ne"
-d = a[29:]      # "ing"
+b = a[:3]
+c = a[4:6]
+d = a[29:]
 e = b + c + d
 print(e)
 ```
-
-**인덱스 확인:**
-```
-e n g i n e e r   i  n  f  o  r  m  a  t  i  o  n     p  r  o  g  r  a  m  m  i  n  g
-0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31
-```
-- `a[:3]` = "eng" (0,1,2)
-- `a[4:6]` = "ne" (4,5)
-- `a[29:]` = "ing" (29,30,31)
 
 ---
 
@@ -172,19 +124,6 @@ c = "R AND %s" % "STR"
 print(b + c)
 ```
 
-**풀이:**
-```
-"REMEMBER NOVEMBER"
- R  E  M  E  M  B  E  R     N  O  V  E  M  B  E  R
- 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
-
-a[0:3]   = "REM"
-a[12:16] = "EMBE"
-b = "REM" + "EMBE" = "REMEMBE"
-c = "R AND STR"
-b+c = "REMEMBE R AND STR"
-```
-
 ---
 
 ### 333 — 슬라이싱 (앞 3글자 + 뒤 3글자)
@@ -193,8 +132,6 @@ String = input("7문자 이상 문자열을 입력하시오 :")
 m = String[0:3] + String[-3:]
 print(m)
 ```
-
-**포인트:** `[-3:]`은 뒤에서 3글자. 입력: `abcdefgh` → 앞 3글자 "abc" + 뒤 3글자 "fgh"
 
 ---
 
@@ -205,12 +142,6 @@ str01 = 'S'
 for i in a:
     str01 = str01 + i[1]
 print(str01)
-```
-
-**풀이:**
-```
-'S' + e(Seoul[1]) + y(Kyeonggi[1]) + n(Incheon[1]) + a(Daejeon[1]) + a(Daegu[1]) + u(Pusan[1])
-= "Seynaau"
 ```
 
 ---
@@ -228,41 +159,28 @@ for sub in lol:
     print()
 ```
 
-**포인트:**
-- `lol[0]` → 첫 번째 행 전체 `[1, 2, 3]`
-- `lol[2][1]` → 세 번째 행의 두 번째 원소 = 7
-- 이중 for 루프로 각 원소 출력, 행 끝에 빈 `print()`로 줄바꿈
-
 ---
 
 ## 6. 세트 & 딕셔너리
 
-### 328 기출체크1 — 세트 메소드 총정리
+### 328 기출체크1 — 세트 메소드
 ```python
 asia = {'한국', '중국', '일본'}
 asia.add('베트남')
-asia.add('중국')       # 중복 → 무시
+asia.add('중국')
 asia.remove('일본')
 asia.update({'한국', '홍콩', '태국'})
 print(asia)
 ```
-
-**세트 메소드 정리:**
-
-| 메소드 | 설명 |
-|--------|------|
-| `.add(x)` | 원소 하나 추가, 중복이면 무시 |
-| `.remove(x)` | 원소 삭제, 없으면 오류 |
-| `.update({...})` | 여러 원소 한번에 추가 |
 
 ---
 
 ### 328 활용2 — 세트 + 반복 출력
 ```python
 a = {'apple', 'lemon', 'banana'}
-a.update({'kiwi', 'banana'})   # banana는 중복이므로 무시
+a.update({'kiwi', 'banana'})
 a.remove('lemon')
-a.add('apple')                  # 중복 → 무시
+a.add('apple')
 for i in a:
     print("과일명 : %s" % i)
 ```
@@ -272,20 +190,12 @@ for i in a:
 ### 335 — 딕셔너리 컴프리헨션 + 세트 교집합
 ```python
 lst = [1, 2, 3]
-dst = {i: i * 2 for i in lst}  # {1:2, 2:4, 3:6}
-s = set(dst.values())           # {2, 4, 6}
-lst[0] = 99                     # lst 변경 (dst에는 영향 없음)
-dst[2] = 7                      # dst[2] → 7로 변경
-s.add(99)                       # s = {2, 4, 6, 99}
+dst = {i: i * 2 for i in lst}
+s = set(dst.values())
+lst[0] = 99
+dst[2] = 7
+s.add(99)
 print(len(s & set(dst.values())))
-```
-
-**풀이:**
-```
-dst.values() = [2, 7, 6]   → set = {2, 7, 6}
-s = {2, 4, 6, 99}
-교집합(s & {2,7,6}) = {2, 6}
-len({2, 6}) = 2
 ```
 
 ---
@@ -306,8 +216,6 @@ for index, lis in enumerate(data):
 print(resultf)    # ← 오타! resultf → result 이어야 함
 ```
 
-**포인트:** `enumerate()`는 `(인덱스, 값)` 쌍을 반환. `resultf`는 존재하지 않는 변수명 → NameError.
-
 ---
 
 ## 7. 함수 (def)
@@ -325,18 +233,6 @@ a = calc(a, b)
 print(a, b)
 ```
 
-**풀이:**
-```
-calc(3, 12) 호출
-  x = 3 * 3 = 9
-  y = 12 / 3 = 4.0  (/ 는 항상 float)
-  print(9, 4.0)
-  return 9
-a = 9  (반환값 대입)
-b는 변화 없음 (함수 내에서 바뀐 y는 지역변수)
-print(9, 12)
-```
-
 ---
 
 ### 331 기출체크1 — 기본값 매개변수
@@ -346,8 +242,6 @@ def func(num1, num2=2):
 
 func(20)
 ```
-
-**포인트:** `num2=2`는 기본값. `func(20)` 처럼 하나만 전달하면 `num2`는 2가 됨.
 
 ---
 
@@ -367,16 +261,6 @@ c = (100, 200)
 print(func(a) + func(b) + func(c))
 ```
 
-**풀이:**
-```
-a = "100.0"   → type은 str   → len("100.0") = 5
-b = 100.0     → type은 float (int 아님!) → else → 20
-c = (100,200) → type은 tuple → else → 20
-5 + 20 + 20 = 45
-```
-
-**핵심:** `type(100)`은 `int`. `100.0`은 `float`이므로 int 조건 불일치 → else.
-
 ---
 
 ## 8. 람다 & map
@@ -387,11 +271,6 @@ a = [1, 2, 3, 4, 5]
 a = list(map(lambda num: num + 100, a))
 print(a)
 ```
-
-**포인트:**
-- `lambda num: num + 100` → 각 원소에 100을 더하는 함수
-- `map(함수, 리스트)` → 리스트의 모든 원소에 함수 적용
-- `list(...)` → map 결과를 리스트로 변환
 
 ---
 
@@ -407,8 +286,6 @@ else:
     a = list(map(lambda num: num + 100, a))
 print(a)
 ```
-
-**풀이:** x=100은 10도 50도 아니므로 else 실행 → 각 원소에 100 더함.
 
 ---
 
@@ -429,14 +306,12 @@ a.chg()
 print(a.x, a.y)
 ```
 
-**포인트:** `chg()`는 x와 y를 서로 교환. `temp`에 임시 저장 후 swap.
-
 ---
 
 ### 330 기출체크1 — 클래스 메소드 (self 명 자유)
 ```python
 class FourCal:
-    def setdata(sel, fir, sec):   # self 대신 sel 사용 (이름은 자유)
+    def setdata(sel, fir, sec):
         sel.fir = fir
         sel.sec = sec
     def add(sel):
@@ -447,8 +322,6 @@ a = FourCal()
 a.setdata(4, 2)
 print(a.add())
 ```
-
-**포인트:** 첫 번째 매개변수 이름은 `self`가 관례지만 `sel` 등 아무 이름이나 가능.
 
 ---
 
@@ -464,15 +337,6 @@ for i in myVar.a:
 print(str01)
 ```
 
-**풀이:**
-```
-' ' + 'S' + 'K' + 'I' + 'D' + 'D' + 'P' = ' SKIDDP'
-```
-
-**327 기출체크1과 차이점:**
-- 327: `str01 = 'S'`로 시작, `i[1]` (두 번째 글자)
-- 기출5: `str01 = ' '`로 시작, `i[0]` (첫 번째 글자)
-
 ---
 
 ## 10. 기출 따라잡기
@@ -486,18 +350,6 @@ def func(lst):
 lst = [1, 2, 3, 4, 5, 6]
 func(lst)
 print(sum(lst[::2]) - sum(lst[1::2]))
-```
-
-**풀이:**
-```
-뒤집기 과정:
-i=0: lst[0] ↔ lst[-1] → 1↔6 → [6,2,3,4,5,1]
-i=1: lst[1] ↔ lst[-2] → 2↔5 → [6,5,3,4,2,1]
-i=2: lst[2] ↔ lst[-3] → 3↔4 → [6,5,4,3,2,1]
-
-lst[::2]  = [6,4,2]  → sum=12  (인덱스 0,2,4)
-lst[1::2] = [5,3,1]  → sum=9   (인덱스 1,3,5)
-12 - 9 = 3
 ```
 
 ---
@@ -518,7 +370,7 @@ for i in range(3, 6):
 
 ## 11. 고급 문제 (트리 / 문자열 탐색)
 
-### 문제 34 — 트리 구조 + 재귀 (홀수 레벨 합)
+### 문제 34 — 트리 구조 + 재귀
 
 #### ⚠️ 버그 버전 (`문제 34.py`) — `return`이 for 루프 안에 있음
 ```python
@@ -531,10 +383,8 @@ def tree(li):
     nodes = [Node(i) for i in li]
     for i in range(1, len(li)):
         nodes[(i - 1) // 2].children.append(nodes[i])
-        return nodes[0]      # ← for 루프 안에 들여쓰기! 첫 반복 후 바로 리턴
+        return nodes[0]      # ← for 루프 안
 ```
-
----
 
 #### ✅ 정상 버전 (`문제34.py`) — `return`이 for 루프 밖에 있음
 ```python
@@ -547,7 +397,7 @@ def tree(li):
     nodes = [Node(i) for i in li]
     for i in range(1, len(li)):
         nodes[(i - 1) // 2].children.append(nodes[i])
-    return nodes[0]           # ← for 루프 밖, 완전한 트리 완성 후 리턴
+    return nodes[0]           # ← for 루프 밖
 
 def calc(node, level=0):
     if node is None:
@@ -559,20 +409,9 @@ root = tree(li)
 print(calc(root))
 ```
 
-**트리 구조:**
-```
-         3 (level 0 → 포함 안 함)
-       /   \
-      5     8  (level 1 → 포함)
-     / \   / \
-   12  15 18  21  (level 2 → 포함 안 함)
-
-결과: 5 + 8 = 13
-```
-
 ---
 
-### 문제 46 — 문자열에서 패턴 등장 횟수 세기
+### 문제 46 — 문자열 패턴 등장 횟수
 
 #### ⚠️ 버그 버전 (`문제 38.py`) — `return`이 for 루프 안에 있음
 ```python
@@ -582,15 +421,13 @@ def cnt(str, p):
         sub = str[i:i+len(p)]
         if sub == p:
             result += 1
-        return result     # ← 루프 첫 반복 후 바로 리턴!
+        return result     # ← for 루프 안
 
 str = "abdcabcabca"
 p1 = "ca"
 p2 = "ab"
 print(f'ab{cnt(str, p1)} ca{cnt(str, p2)}')
 ```
-
----
 
 #### ✅ 정상 버전 (`문제46.py`) — `return`이 for 루프 밖에 있음
 ```python
@@ -600,7 +437,7 @@ def cnt(str, p):
         sub = str[i:i+len(p)]
         if sub == p:
             result += 1
-    return result         # ← 루프 완료 후 리턴
+    return result         # ← for 루프 밖
 
 str = "abdcabcabca"
 p1 = "ca"
@@ -608,66 +445,9 @@ p2 = "ab"
 print(f'ab{cnt(str, p1)} ca{cnt(str, p2)}')
 ```
 
-**풀이 (p1="ca" 카운트):**
-```
-"abdcabcabca"
- a b d c a b c a b c a
- 0 1 2 3 4 5 6 7 8 9 10
-
-i=3: str[3:5]="ca" ✓ → result=1
-i=6: str[6:8]="ca" ✓ → result=2
-i=9: str[9:11]="ca" ✓ → result=3
-최종 cnt(str, "ca") = 3
-```
-
 ---
 
-## 12. 자주 나오는 함정 정리
-
-### 1. 들여쓰기로 결정되는 `return` 위치
-```python
-# 잘못된 예 — return이 for 루프 안에
-for i in range(10):
-    result += 1
-    return result    # 첫 번째 반복 후 바로 리턴!
-
-# 올바른 예 — return이 for 루프 밖에
-for i in range(10):
-    result += 1
-return result        # 루프 전체 완료 후 리턴
-```
-
-### 2. `/` vs `//` 나눗셈
-```python
-12 / 3   # 4.0  (항상 float)
-12 // 3  # 4    (int, 몫만)
-```
-
-### 3. 세트는 순서가 없다
-```python
-s = {1, 2, 3}
-# 출력 시 {1, 2, 3} 또는 {3, 1, 2} 등 순서 불규칙
-```
-
-### 4. `type()` 비교에서 float ≠ int
-```python
-type(100)   # <class 'int'>
-type(100.0) # <class 'float'>  ← 다름!
-```
-
-### 5. 함수 안에서 변경한 변수는 밖에 영향 없음
-```python
-def func(x, y):
-    x *= 3   # 지역변수 x만 바뀜
-    y /= 3   # 지역변수 y만 바뀜
-a, b = 3, 12
-func(a, b)
-# a, b는 여전히 3, 12
-```
-
----
-
-## 13. 정답 모음
+## 12. 정답 모음
 
 | # | 문제 | 출력 |
 |---|------|------|
@@ -682,7 +462,7 @@ func(a, b)
 | 9 | 333 — 앞뒤 3글자 (입력: `abcdefgh`) | `abcfgh` |
 | 10 | 327 기출1 — 두 번째 글자 모으기 | `Seynaau` |
 | 11 | 335 — 세트 교집합 len | `2` |
-| 12 | Section 125 기출2 — enumerate | `NameError` (resultf 오타) |
+| 12 | Section 125 기출2 | `NameError` (resultf 오타) |
 | 13 | 329 기출1 — lambda + map | `[101, 102, 103, 104, 105]` |
 | 14 | 01 예제 — if + lambda | `[101, 102, 103, 104, 105]` |
 | 15 | 330 기출1 — 클래스 add | `6` |
@@ -694,9 +474,7 @@ func(a, b)
 | 21 | 문제 38 (버그) — 패턴 카운트 | `ab0 ca1` |
 | 22 | 문제46 (정상) — 패턴 카운트 | `ab3 ca3` |
 
----
-
-### 멀티라인 출력 상세
+### 멀티라인 출력
 
 **문제 24** (입력: `3 5`)
 ```
@@ -704,7 +482,7 @@ x의 값 : 3
 y의 값 : 5
 ```
 
-**02 잠깐만요 / 331 클래스없는 — 함수 지역변수**
+**02 잠깐만요 / 331 클래스없는**
 ```
 9 4.0
 9 12
@@ -737,7 +515,7 @@ y의 값 : 5
 과일명 : kiwi
 ```
 
-**기출 따라잡기 문제5 — 첫 글자 모으기**
+**기출 따라잡기 문제5**
 ```
  SKIDDP
 ```
@@ -749,7 +527,246 @@ y의 값 : 5
 3 4 5 
 ```
 
-**Section 125 기출2** (resultf → result 수정 시)
+**Section 125 기출2** (오타 수정 시)
 ```
 {0: (15, 5), 1: (10, 3), 2: (18, 5), 3: (9, 2)}
 ```
+
+---
+
+## 13. 풀이 & 포인트 모음
+
+### 문제 01
+`==`는 값을 비교. 100과 200은 다르므로 False.
+
+---
+
+### 문제 24
+`split(' ')`으로 공백 기준 분리 후 각각 변수에 대입.
+
+---
+
+### 문제 13 — 비트 AND
+```
+a = 2 → 이진수 010
+b = 3 → 이진수 011
+a & b → 010 (둘 다 1인 자리만 1)
+010 = 2
+```
+
+---
+
+### 332 — 비트 시프트
+```
+i=1: result = 100 >> 1 = 50,  result = 50+1 = 51
+i=2: result = 100 >> 2 = 25,  result = 25+1 = 26
+```
+`>>` 오른쪽 시프트 = 2로 나눔. 매 반복마다 result가 덮어쓰여짐.
+
+---
+
+### 문제 15
+루프가 끝난 뒤 `i`는 마지막 값인 10. `hap`은 1~10 합계 = 55.
+
+---
+
+### 문제 26 / 27
+`while 1`은 `while True`와 완전히 동일. `i >= 100`이 되면 break로 탈출.
+
+---
+
+### 문제 12 — 짝수 합
+```
+a=1: 홀수 → continue
+a=2: 짝수 → sum=2
+a=3: 홀수 → continue
+a=4: 짝수 → sum=6
+a=5: 홀수 → continue
+a=6: 짝수 → sum=12
+a=7: 홀수 → continue
+a=8: 짝수 → sum=20
+a=9: 홀수 → continue
+a=10: 짝수 → sum=30
+```
+
+---
+
+### 문제 25 — 슬라이싱 인덱스
+```
+e n g i n e e r   i  n  f  o  r  m  a  t  i  o  n     p  r  o  g  r  a  m  m  i  n  g
+0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31
+
+a[:3]  = "eng"
+a[4:6] = "ne"
+a[29:] = "ing"
+→ "eng" + "ne" + "ing" = "engneing"
+```
+
+---
+
+### 328 기출2 — 슬라이싱 인덱스
+```
+"REMEMBER NOVEMBER"
+ R  E  M  E  M  B  E  R     N  O  V  E  M  B  E  R
+ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
+
+a[0:3]   = "REM"
+a[12:16] = "EMBE"
+b = "REM" + "EMBE" = "REMEMBE"
+c = "R AND STR"
+b+c = "REMEMBE R AND STR"
+```
+
+---
+
+### 333
+`[-3:]`은 뒤에서 3글자. 입력 `abcdefgh` → "abc" + "fgh" = "abcfgh"
+
+---
+
+### 327 기출1 — 두 번째 글자
+```
+'S' + e(Seoul[1]) + y(Kyeonggi[1]) + n(Incheon[1])
+    + a(Daejeon[1]) + a(Daegu[1]) + u(Pusan[1])
+= "Seynaau"
+```
+
+---
+
+### 문제 03 / 36
+- `lol[0]` → 첫 번째 행 전체 `[1, 2, 3]`
+- `lol[2][1]` → 세 번째 행의 두 번째 원소 = 7
+- 이중 for 루프 + 빈 `print()`로 줄바꿈
+
+---
+
+### 328 기출1 — 세트 메소드
+
+| 메소드 | 설명 |
+|--------|------|
+| `.add(x)` | 원소 하나 추가, 중복이면 무시 |
+| `.remove(x)` | 원소 삭제, 없으면 오류 |
+| `.update({...})` | 여러 원소 한번에 추가 |
+
+세트는 순서가 없으므로 출력 순서 불규칙.
+
+---
+
+### 335 — 딕셔너리 + 세트 교집합
+```
+dst = {1:2, 2:4, 3:6}
+s = {2, 4, 6}
+dst[2] = 7  →  dst.values() = [2, 7, 6]  →  set = {2, 7, 6}
+s.add(99)   →  s = {2, 4, 6, 99}
+교집합(s & {2,7,6}) = {2, 6}
+len({2, 6}) = 2
+```
+
+---
+
+### Section 125 기출2
+`enumerate()`는 `(인덱스, 값)` 쌍을 반환. `resultf`는 존재하지 않는 변수명 → NameError.
+
+---
+
+### 02 잠깐만요 / 331 클래스없는 — 지역변수
+```
+calc(3, 12) 호출
+  x = 3 * 3 = 9
+  y = 12 / 3 = 4.0  (/ 는 항상 float)
+  print(9, 4.0)
+  return 9
+a = 9 (반환값 대입)
+b는 변화 없음 (y는 지역변수)
+print(9, 12)
+```
+
+---
+
+### 331 기출1 — 기본값 매개변수
+`num2=2`는 기본값. `func(20)` 처럼 하나만 전달하면 `num2`는 2가 됨.
+
+---
+
+### 기출 따라잡기 문제2 — type()
+```
+a = "100.0"   → type은 str   → len("100.0") = 5
+b = 100.0     → type은 float (int 아님!) → else → 20
+c = (100,200) → type은 tuple → else → 20
+5 + 20 + 20 = 45
+```
+`type(100)`은 `int`. `100.0`은 `float`이므로 int 조건 불일치.
+
+---
+
+### 329 기출1 / 01 예제 — lambda + map
+- `lambda num: num + 100` → 각 원소에 100을 더하는 함수
+- `map(함수, 리스트)` → 리스트의 모든 원소에 함수 적용
+- `list(...)` → map 결과를 리스트로 변환
+- x=100은 10도 50도 아니므로 else 실행
+
+---
+
+### 02 예제 / 330 클래스 — swap
+`chg()`는 x와 y를 서로 교환. `temp`에 임시 저장 후 swap.
+
+---
+
+### 330 기출1 — self 명 자유
+첫 번째 매개변수 이름은 `self`가 관례지만 `sel` 등 아무 이름이나 가능. 인스턴스를 가리키는 역할은 동일.
+
+---
+
+### 기출 따라잡기 문제5 — 첫 글자
+```
+str01 = ' '(공백)으로 시작
+' ' + S + K + I + D + D + P = ' SKIDDP'
+```
+327 기출1과 차이: 327은 `'S'`로 시작 + `i[1]`(두 번째 글자), 기출5는 `' '`로 시작 + `i[0]`(첫 번째 글자).
+
+---
+
+### 기출 따라잡기 문제1 — 리스트 뒤집기
+```
+i=0: lst[0] ↔ lst[-1] → 1↔6 → [6,2,3,4,5,1]
+i=1: lst[1] ↔ lst[-2] → 2↔5 → [6,5,3,4,2,1]
+i=2: lst[2] ↔ lst[-3] → 3↔4 → [6,5,4,3,2,1]
+
+lst[::2]  = [6,4,2]  → sum=12
+lst[1::2] = [5,3,1]  → sum=9
+12 - 9 = 3
+```
+
+---
+
+### 문제34 (정상) — 트리 재귀
+```
+         3 (level 0 → 포함 안 함)
+       /   \
+      5     8  (level 1 → 포함)
+     / \   / \
+   12  15 18  21  (level 2 → 포함 안 함)
+
+결과: 5 + 8 = 13
+```
+버그 버전은 `return`이 for 루프 안 → 첫 반복 후 바로 리턴 → 트리 미완성 → 출력 5.
+
+---
+
+### 문제46 (정상) — 패턴 카운트
+```
+"abdcabcabca"
+ a b d c a b c a b c a
+ 0 1 2 3 4 5 6 7 8 9 10
+
+cnt(str, "ca"):
+  i=3: "ca" ✓ → result=1
+  i=6: "ca" ✓ → result=2
+  i=9: "ca" ✓ → result=3
+
+cnt(str, "ab"):
+  i=0: "ab" ✓ → result=1
+  i=4: "ab" ✓ → result=2
+  i=7: "ab" ✓ → result=3
+```
+버그 버전은 `return`이 for 루프 안 → 첫 반복 후 바로 리턴 → cnt("ca")=0, cnt("ab")=1 → `ab0 ca1`.
